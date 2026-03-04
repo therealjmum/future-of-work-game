@@ -3,43 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Imagine it's 2030 — Future of Work Card Game</title>
-<meta name="description" content="An interactive card game to explore how AI will reshape work, teams, and leadership by 2030. Drag cards, react, discuss.">
-
-<!-- Open Graph -->
-<meta property="og:type"        content="website">
-<meta property="og:url"         content="https://therealjmum.github.io/future-of-work-2030/">
-<meta property="og:title"       content="Imagine it's 2030. What do you believe?">
-<meta property="og:description" content="An interactive card game to explore how AI will reshape work, teams, and leadership by 2030. Drag cards, react, discuss.">
-<meta property="og:image"       content="https://therealjmum.github.io/future-of-work-2030/og-image.png">
+<meta name="description" content="An interactive card game to explore how AI will reshape work, teams, and leadership by 2030.">
+<meta property="og:type"         content="website">
+<meta property="og:url"          content="https://therealjmum.github.io/future-of-work-2030/preview.html">
+<meta property="og:title"        content="Imagine it's 2030. What do you believe?">
+<meta property="og:description"  content="An interactive card game to explore how AI will reshape work, teams, and leadership by 2030.">
+<meta property="og:image"        content="https://therealjmum.github.io/future-of-work-2030/preview.html">
 <meta property="og:image:width"  content="1200">
 <meta property="og:image:height" content="630">
-
-<!-- Twitter / X -->
 <meta name="twitter:card"        content="summary_large_image">
 <meta name="twitter:title"       content="Imagine it's 2030. What do you believe?">
 <meta name="twitter:description" content="An interactive card game to explore how AI will reshape work, teams, and leadership by 2030.">
-<meta name="twitter:image"       content="https://therealjmum.github.io/future-of-work-2030/og-image.png">
-
-<!-- Redirect to the game immediately -->
-<meta http-equiv="refresh" content="0; url=index.html">
-
+<meta name="twitter:image"       content="https://therealjmum.github.io/future-of-work-2030/preview.html">
 <style>
-  body {
-    margin: 0;
-    background: #1A1917;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    font-family: Inter, Arial, sans-serif;
-    color: white;
-  }
-  a { color: #CC5500; font-size: 1em; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden;background:#1A1917;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+  .wrap{position:relative;width:1200px;height:630px;background:#1A1917;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:0 80px}
+  .glow{position:absolute;top:-180px;right:-120px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(204,85,0,.35) 0%,rgba(204,85,0,.1) 40%,transparent 70%);pointer-events:none}
+  .glow2{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,rgba(0,0,0,.35),transparent);pointer-events:none}
+  .eyebrow{font-size:20px;font-weight:600;color:#CC5500;letter-spacing:4px;text-transform:uppercase;margin-bottom:28px}
+  .line1{font-size:100px;font-weight:900;color:#ffffff;letter-spacing:-4px;line-height:.95;margin-bottom:8px}
+  .line2{font-size:100px;font-weight:900;color:#3A3936;letter-spacing:-4px;line-height:.95;margin-bottom:40px}
+  .sub{font-size:26px;font-weight:300;color:rgba(255,255,255,.38);letter-spacing:-.2px;margin-bottom:48px}
+  .bar{width:100px;height:4px;background:#CC5500;border-radius:2px;margin-bottom:20px}
+  .dots{display:flex;gap:12px;align-items:center}
+  .dot{width:16px;height:16px;border-radius:50%}
 </style>
 </head>
 <body>
-  <p>Redirecting… <a href="index.html">Click here if not redirected</a></p>
+<div class="wrap">
+  <div class="glow"></div>
+  <div class="glow2"></div>
+  <div class="eyebrow">Future of Work &nbsp;·&nbsp; 2030</div>
+  <div class="line1">Imagine it's 2030.</div>
+  <div class="line2">What do you believe?</div>
+  <div class="sub">An interactive card game about work in the age of AI</div>
+  <div class="bar"></div>
+  <div class="dots">
+    <div class="dot" style="background:#CC5500"></div>
+    <div class="dot" style="background:#7C3AED"></div>
+    <div class="dot" style="background:#1D4ED8"></div>
+    <div class="dot" style="background:#0F766E"></div>
+    <div class="dot" style="background:#D97706"></div>
+    <div class="dot" style="background:#9D174D"></div>
+    <div class="dot" style="background:#374151"></div>
+  </div>
+</div>
 </body>
 </html>
