@@ -1,54 +1,145 @@
-<!DOCTYPE html>
+import { useEffect, useRef, useState } from "react";
+
+export default function OGImageGenerator() {
+  const canvasRef = useRef(null);
+  const [dataUrl, setDataUrl] = useState("");
+  const [html, setHtml] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const W = 1200, H = 630;
+
+    // Background
+    ctx.fillStyle = "#1A1917";
+    ctx.fillRect(0, 0, W, H);
+
+    // Glow top-right
+    const glow = ctx.createRadialGradient(900, 60, 0, 900, 60, 560);
+    glow.addColorStop(0,   "rgba(204,85,0,0.38)");
+    glow.addColorStop(0.4, "rgba(204,85,0,0.10)");
+    glow.addColorStop(1,   "rgba(26,25,23,0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+
+    // Bottom fade
+    const bot = ctx.createLinearGradient(0, 430, 0, H);
+    bot.addColorStop(0, "rgba(0,0,0,0)");
+    bot.addColorStop(1, "rgba(0,0,0,0.4)");
+    ctx.fillStyle = bot;
+    ctx.fillRect(0, 0, W, H);
+
+    // Eyebrow
+    ctx.font = "600 22px Arial";
+    ctx.fillStyle = "#CC5500";
+    ctx.fillText("FUTURE OF WORK  ·  2030", 80, 148);
+
+    // Line 1
+    ctx.font = "900 104px Arial";
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillText("Imagine it\u2019s 2030.", 80, 282);
+
+    // Line 2
+    ctx.fillStyle = "#3A3936";
+    ctx.fillText("What do you believe?", 80, 398);
+
+    // Subtitle
+    ctx.font = "300 27px Arial";
+    ctx.fillStyle = "rgba(255,255,255,0.38)";
+    ctx.fillText("An interactive card game about work in the age of AI", 80, 480);
+
+    // Accent bar
+    ctx.fillStyle = "#CC5500";
+    ctx.beginPath();
+    ctx.roundRect(80, 540, 110, 5, 3);
+    ctx.fill();
+
+    // Colour dots
+    const colors = ["#CC5500","#7C3AED","#1D4ED8","#0F766E","#D97706","#9D174D","#374151"];
+    colors.forEach((col, i) => {
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.arc(80 + i * 30, 575, 8, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    const url = canvas.toDataURL("image/png");
+    setDataUrl(url);
+
+    const htmlOutput = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Imagine it's 2030 — Future of Work Card Game</title>
+<title>Imagine it\u2019s 2030 \u2014 Future of Work Card Game</title>
 <meta name="description" content="An interactive card game to explore how AI will reshape work, teams, and leadership by 2030.">
-<meta property="og:type"         content="website">
-<meta property="og:url"          content="https://therealjmum.github.io/future-of-work-2030/preview.html">
-<meta property="og:title"        content="Imagine it's 2030. What do you believe?">
-<meta property="og:description"  content="An interactive card game to explore how AI will reshape work, teams, and leadership by 2030.">
-<meta property="og:image"        content="https://therealjmum.github.io/future-of-work-2030/preview.html">
-<meta property="og:image:width"  content="1200">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://therealjmum.github.io/future-of-work-2030/">
+<meta property="og:title" content="Imagine it\u2019s 2030. What do you believe?">
+<meta property="og:description" content="An interactive card game to explore how AI will reshape work, teams, and leadership by 2030.">
+<meta property="og:image" content="${url}">
+<meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="Imagine it's 2030. What do you believe?">
-<meta name="twitter:description" content="An interactive card game to explore how AI will reshape work, teams, and leadership by 2030.">
-<meta name="twitter:image"       content="https://therealjmum.github.io/future-of-work-2030/preview.html">
-<style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  html,body{width:1200px;height:630px;overflow:hidden;background:#1A1917;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-  .wrap{position:relative;width:1200px;height:630px;background:#1A1917;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:0 80px}
-  .glow{position:absolute;top:-180px;right:-120px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(204,85,0,.35) 0%,rgba(204,85,0,.1) 40%,transparent 70%);pointer-events:none}
-  .glow2{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,rgba(0,0,0,.35),transparent);pointer-events:none}
-  .eyebrow{font-size:20px;font-weight:600;color:#CC5500;letter-spacing:4px;text-transform:uppercase;margin-bottom:28px}
-  .line1{font-size:100px;font-weight:900;color:#ffffff;letter-spacing:-4px;line-height:.95;margin-bottom:8px}
-  .line2{font-size:100px;font-weight:900;color:#3A3936;letter-spacing:-4px;line-height:.95;margin-bottom:40px}
-  .sub{font-size:26px;font-weight:300;color:rgba(255,255,255,.38);letter-spacing:-.2px;margin-bottom:48px}
-  .bar{width:100px;height:4px;background:#CC5500;border-radius:2px;margin-bottom:20px}
-  .dots{display:flex;gap:12px;align-items:center}
-  .dot{width:16px;height:16px;border-radius:50%}
-</style>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Imagine it\u2019s 2030. What do you believe?">
+<meta name="twitter:description" content="An interactive card game about work in the age of AI.">
+<meta name="twitter:image" content="${url}">
+<meta http-equiv="refresh" content="0; url=index.html">
+<style>body{margin:0;background:#1A1917;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Arial,sans-serif;color:white;}a{color:#CC5500;font-size:1em;}</style>
 </head>
 <body>
-<div class="wrap">
-  <div class="glow"></div>
-  <div class="glow2"></div>
-  <div class="eyebrow">Future of Work &nbsp;·&nbsp; 2030</div>
-  <div class="line1">Imagine it's 2030.</div>
-  <div class="line2">What do you believe?</div>
-  <div class="sub">An interactive card game about work in the age of AI</div>
-  <div class="bar"></div>
-  <div class="dots">
-    <div class="dot" style="background:#CC5500"></div>
-    <div class="dot" style="background:#7C3AED"></div>
-    <div class="dot" style="background:#1D4ED8"></div>
-    <div class="dot" style="background:#0F766E"></div>
-    <div class="dot" style="background:#D97706"></div>
-    <div class="dot" style="background:#9D174D"></div>
-    <div class="dot" style="background:#374151"></div>
-  </div>
-</div>
+<p>Redirecting\u2026 <a href="index.html">Click here if not redirected</a></p>
 </body>
-</html>
+</html>`;
+    setHtml(htmlOutput);
+  }, []);
+
+  function download() {
+    const blob = new Blob([html], { type: "text/html" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "preview.html";
+    a.click();
+  }
+
+  function copyHtml() {
+    navigator.clipboard.writeText(html).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
+
+  return (
+    <div style={{fontFamily:"Inter,Arial,sans-serif",background:"#FAF9F7",minHeight:"100vh",padding:"40px 24px",display:"flex",flexDirection:"column",alignItems:"center",gap:32}}>
+      <div style={{textAlign:"center"}}>
+        <div style={{fontSize:"0.7em",letterSpacing:"3px",textTransform:"uppercase",color:"#CC5500",fontWeight:600,marginBottom:8}}>Step 1 — Preview your OG image</div>
+        <h1 style={{fontSize:"1.8em",fontWeight:900,color:"#1A1917",letterSpacing:"-1px",marginBottom:4}}>preview.html Generator</h1>
+        <p style={{color:"#8A8784",fontWeight:300}}>One file. Upload to GitHub. Done.</p>
+      </div>
+
+      <canvas ref={canvasRef} width={1200} height={630} style={{width:"100%",maxWidth:720,borderRadius:12,boxShadow:"0 8px 40px rgba(0,0,0,0.18)",border:"1px solid #E8E4DC"}} />
+
+      {dataUrl && (
+        <div style={{display:"flex",gap:12,flexWrap:"wrap",justifyContent:"center"}}>
+          <button onClick={download} style={{background:"#CC5500",color:"white",border:"none",padding:"16px 36px",borderRadius:"50px",fontSize:"1em",fontWeight:700,cursor:"pointer",fontFamily:"inherit"}}>
+            ⬇ Download preview.html
+          </button>
+          <button onClick={copyHtml} style={{background:"#1A1917",color:"white",border:"none",padding:"16px 36px",borderRadius:"50px",fontSize:"1em",fontWeight:700,cursor:"pointer",fontFamily:"inherit"}}>
+            {copied ? "✓ Copied!" : "Copy HTML"}
+          </button>
+        </div>
+      )}
+
+      <div style={{background:"white",border:"1px solid #E8E4DC",borderRadius:14,padding:"20px 28px",maxWidth:560,width:"100%"}}>
+        <div style={{fontSize:"0.68em",letterSpacing:"2px",textTransform:"uppercase",color:"#CC5500",fontWeight:600,marginBottom:10}}>How to use</div>
+        <ol style={{color:"#4A4845",fontSize:"0.88em",lineHeight:1.8,paddingLeft:18}}>
+          <li>Click <strong>Download preview.html</strong> above</li>
+          <li>Upload it to your <code style={{background:"#F5F0E8",padding:"1px 6px",borderRadius:4}}>therealjmum/future-of-work-2030</code> repo root</li>
+          <li>Share <code style={{background:"#F5F0E8",padding:"1px 6px",borderRadius:4}}>therealjmum.github.io/future-of-work-2030/preview.html</code></li>
+          <li>The image is embedded directly — no extra files needed ✓</li>
+        </ol>
+      </div>
+    </div>
+  );
+}
